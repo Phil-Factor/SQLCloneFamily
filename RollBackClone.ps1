@@ -38,7 +38,7 @@ if ($data.tools.SQLCompare -ne $null)
 }
 else
 {
-  Write-Warning "We assume you don't want to do a comparison to saave work";
+  Write-Warning "We assume you don't want to do a comparison to ensure that any existing work is saved.";
   $NoSqlCompare = $true
 }
 <#connect to clone #>
@@ -81,9 +81,6 @@ if ($Errors.count -eq 0)
 <# save any schema differences between the two #>
 if ($Errors.count -eq 0)
 {
-  write-verbose "checking whether anything has changed on clone $($ResetClone.Netname) $($ResetClone.Database) compared with  $($OriginalClone.Netname) $($OriginalClone.Database)"
-  <# make sure all the connections are servicable #>
-  
   # we need to get hol;d of the passwords for any connection that has a userid
   # attached to it. We save these in a file within the user area, relying on NTFS security and 
   # encryption (gulp)
@@ -111,6 +108,9 @@ if ($Errors.count -eq 0)
   }
   if ($resetClone.Nocheck -ne $true -and $NoSqlCompare -eq $false)
   {
+    write-verbose "checking whether anything has changed on clone $($ResetClone.Netname) $($ResetClone.Database) compared with  $($OriginalClone.Netname) $($OriginalClone.Database)"
+    <# make sure all the connections are servicable #>
+  
     #Now we have the connection information 
     #we need to make sure that the work directory is there and
     # also that there isn't a script file  there already. 
@@ -119,6 +119,9 @@ if ($Errors.count -eq 0)
       New-Item -ItemType Directory -Force -Path "$($data.WorkDirectory)" `
            -ErrorAction silentlycontinue -ErrorVariable +Errors;
     }
+    if ($ResetClone.AfterCreateScripts -ne $null)
+        {write-warning "Your Clone $($ResetClone.Netname) $($ResetClone.Database) has one or more raw scripts to execute. 
+         If they are database changes, these will show up in the comparison!"}
     $OutputMigrationScript = "$($data.WorkDirectory)\$($ResetClone.Database)-$($OriginalClone.Database).sql"
     # if there is already a script there, we rename it
     if (Test-Path -PathType Leaf $OutputMigrationScript)
@@ -154,7 +157,7 @@ if ($Errors.count -eq 0)
     }
   }
 }
-if ($ResetClone.AfterCreateScripts -ne $null)
+if ($ResetClone.AfterCreateScripts -ne $null -and $Errors.count -eq 0)
 {
   $ConnectionString = "Data Source=$($ResetClone.Netname);Initial Catalog=$($ResetClone.Database)"
   if ($ResetClone.username -eq '')
