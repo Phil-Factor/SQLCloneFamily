@@ -2,7 +2,7 @@
 is best identified by its NetName (server) and database #>
 $Reset = @{
   'Database' = 'AdventureWorksOurs';
-  'Server' = 'PentlowMillServ'
+  'Server' = 'MyServer'
 }
 
 $VerbosePreference = "Continue"
