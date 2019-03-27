@@ -4,10 +4,11 @@ So far, we have
 * Deploying and Reverting Clones for Database Development and Testing
 * Making changes to Images and Clones for Database Development and Testing
 * Safely Deleting and updating Clones for Database Development and Testing 
+* checking the status of all the clones relating to an image and reporting these in a Visio diagram
 
 The Data file maps out a Clone installation consisting of a source database, an image and some clones. 
 
-The scripts show how to show how to install a grop of clones from an image. It shows how to roll back a clone to its original state, and to delete all the clones. 
+The scripts show how to show how to install a group of clones from an image. It shows how to roll back a clone to its original state, and to delete all the clones. It also demonstrates how to ascertain the status of your clones.
 
 By combining the deletion script with the install script, you can, in effect, update the clones when the original database changes. 
 
