@@ -5,6 +5,8 @@ So far, we have
 * Making changes to Images and Clones for Database Development and Testing
 * Safely Deleting and updating Clones for Database Development and Testing 
 * checking the status of all the clones relating to an image and reporting these in a Visio diagram
+* Repeatedly creating a clone from a test database for unit testing
+* Cloning all the database on a SQL Server instance to one or more other instances
 
 The Data file maps out a Clone installation consisting of a source database, an image and some clones. 
 
